@@ -1,0 +1,31 @@
+{% extends "base.html" %}  
+
+{ {% block head %}
+    <title>Checkout</title>
+{% endblock head %}}
+
+{% block body %}
+<h3>Checkout</h3>
+
+<div class="order-info">
+    <h3>Your Order</h3>
+    <ul>
+        {% for item in cart %}
+           <li>{{ item.quantity }}x {{ item.product.name }}<span>${{ item.total_price }}</span></li>
+           {% endfor %}
+           {% if cart.coupon %}
+           <li>
+               "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
+           </li>
+           {% endif %}
+    </ul>
+    <p>Total: ${{ cart.get_total_price }}</p>
+</div>
+
+<form action="." method="post" class="order-form">
+{{ form.as_p }}
+<p><input type="submit" class="btn btn-info" value="Place order"></p>
+{% csrf_token %}
+</form>
+
+{% endblock body %}

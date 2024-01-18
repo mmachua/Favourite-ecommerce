@@ -1,0 +1,89 @@
+{% extends "base.html" %}  
+{% load crispy_forms_tags %}
+{% load i18n %}
+{ {% block head %}
+    <title>Order</title>
+{% endblock head %}}
+
+{% block body %}
+<nav class="navbar navbar-expand text-white shadow navbar " style="background-color:teal;">Order</nav>
+<br/>
+
+
+<div class="row">
+        <div class="col-12 col-sm-6 col-md-6">
+            <div class="container">
+                <div class="card shadow-sm">
+                        <div class="card-body">                      
+            <div class="container">
+
+                    <div class="alert alert-primary" role="alert">
+                        <p> checkout! </p>
+                    </div>
+
+                {% if form %}
+                <form method="post" role="form" action="" class="">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                
+                <p><input type="submit" class="btn btn-sm btn-info" value="Place order"></p>
+                </form> 
+                {% endif %}
+            </div>             
+        </div>
+    </div>
+</div> 
+</div>
+        <!--section 2-->
+    <div class="col-3 col-md col-md-6" >
+    
+    
+    
+    
+        
+            <div class="container">
+                
+                    <div class="card shadow-sm border-0" style="width: 18rem;">
+                            <div class="card-header">
+                                    <h3 style="color:olive;">Your Order</h3>
+                            </div>
+
+                    <ul class="list-group list-group-flush">
+                            {% for item in cart %}
+                            <li class="list-group-item">{{ item.quantity }}x {{ item.product.name }} <span>  ${{ item.total_price }}</span></li>
+                            {% endfor %}
+                            {% if cart.coupon %}
+                            <li class="list-group-item">
+                                "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
+                                <span>-${{ cart.get_dicount|floatformat:"2" }}</span>
+                            </li>
+                            {% endif %}
+                    </ul>
+                <div class="card-footer">
+                    <h5 > <b style="color:red;">Total</b>  : ${{ cart.get_total_price }}  </h5>
+                </div>
+            </div>
+        </div> 
+      </div>
+         </div>
+        </div>     
+        
+    </div>
+
+
+
+
+
+
+
+</div>
+
+<br/>
+<hr/>     
+<footer class="container">
+      <p class="float-right"><a href="#">Back to top</a></p>
+      <p>&copy; Martin Machua &middot; <a href="#">Privacy</a> Comparisonn <a href="#">Terms</a></p>
+    </footer>   
+
+
+{% endblock body %}
