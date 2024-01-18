@@ -1,0 +1,57 @@
+ {% extends "base.html" %}   
+    
+ {% load crispy_forms_tags %}
+
+ {{%  block head %}
+<title>Login</title>
+{% endblock head  %}}
+
+{% block body %}
+
+<nav class="navbar navbar-expand text-white shadow navbar " style="background-color:teal;"><h5>Welcome</h5></nav>
+<br/>
+<div class="container">
+<div class="row">
+    <div class="col-3 col-md col-md-3">
+        <div class="container">
+          <h4></h4>
+        </div>
+            
+        </div>
+
+            <!--section 2-->
+        <div class="col-12 col-sm-6 col-md-6" >
+            <div class="alert alert-primary" role="alert">         
+                <p text-align "center">
+                   you can login here!
+                </p>
+           </div>
+           <h2>Login</h2><b>
+           <form method="POST">
+              {% csrf_token %}   
+              {{ form|crispy }}
+              <button type="submit" class="btn btn-primary" name="button">Sign In</button>          
+           </form>
+        </b>
+        <br/>
+        <a href="{% url 'login:reset_password'  %}"><h5>Forgot password?</h5> </a>
+        <a  href="{% url 'login:register'  %}"> <h5> Sign Up</h5></a>
+        
+           </div>
+
+            </div>
+
+            <div class="col-3 col-md col-md-3">
+                <div class="container" style="color:olive;"><h4></h4>
+              
+                  </div>
+                </div>
+        
+
+
+
+<!--<div class="rights">
+    <h6 class="container">2018 © machua martin</h6>
+</div>
+</div>-->
+{% endblock body %}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+
+{% endblock %}
+{% block extrahead %}
+{{ block.super }}
+{{form.media}}
+{% endblock %}
+{{%  block head %}
+<title>Shopping Cart</title>
+{% endblock head  %}}
+
+{% block body %}
+
+<nav class="navbar navbar-expand text-white shadow navbar " style="background-color:teal;">{{ user}}'s cart</nav>'
+<div class="container">
+
+  <table class="table ">
+    <thead>
+      <tr class="table-info shadow-sm p-3 mb-5 bg-white rounded">
+        <th scope="col">Image</th>
+        <th scope="col">Product</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Remove</th>
+        <th scope="col">Unit price</th>                
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart %}
+        {% with product=item.product %}
+          <tr>
+            <td>
+              <a href="{{ product.get_absolute_re_path }}">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" style="width: 8rem;">                    
+              </a>
+            </td>
+            <td style="color:rgb(124, 41, 124);"> <h6>{{ product.name }}</h6></td>
+            <td ><form action="{% url "cart:cart_add" product.id %}" method="post" >
+              {{ item.update_quantity_form.quantity }}
+              {{ item.update_quantity_form.update }}
+              <input type="submit" class="btn btn-info  btn-sm" value="Update">
+              {% csrf_token %}
+            </form></td>
+            <td><a href="{% url "cart:cart_remove" product.id %}">Remove</a></td>
+            <td class="num">${{ item.price }}</td>
+            <td class="num" style="color:purple;">${{ item.total_price }}</td>
+          </tr>
+        {% endwith %}
+      {% endfor %}
+      <br/>
+      {% if cart.coupon %}
+      <tr class="subtotal ">
+        <td>{% trans "Subtotal" %}</td>
+        <td colspan="4"></td>
+        <td class="num" style="color:red;"><h6>${{ cart.get_total_price }}</h6></th>
+      </tr>
+<tr>
+  {% blocktrans with code=cart.coupon.code discount=cart.coupon.discount %}
+   <td>"{{ code }}" coupon ({{ discount }}% off) </td>
+   {% endblocktrans %}
+   <td colspan="4">hj</td>
+   <td class="num neg">- ${{ cart.get_discount|floatformat:"2" }}</td>
+</tr>
+{% endif %}
+<tr class="total">
+  <td>{% trans "Total" %}</td>
+  <td colspan="4"></td>
+  <td class="num">${{ cart.get_total_price_after_discount|floatformat:"2" }}</td>
+</tr>
+
+    </tbody>
+    <tbody>
+      {% for coupon in coupons %}
+          <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{coupon.id}}</td>
+              <td>{{coupon.code}}</td>
+          </tr>
+      {% endfor %}
+  </tbody>
+  </table>
+<hr/>
+
+<h6>
+  {% trans "Apply a coupon" %}:
+</h6>
+
+<form action="{% url "coupons:apply" %}" method="POST">
+  {{ coupon_apply_form }}
+  <input type="submit" class="btn btn-info" value="{% trans "Apply" %}">
+  {% csrf_token %}
+  {{ form|crispy }}
+</form>
+
+
+
+  <p class=" text-right">
+    <a href=" {% url  'shop:product_list' %}" ><button type="button" class="btn btn-info  btn-sm">Continue shopping</button></a>
+    <a href="{% url 'orders:order_create' %}" ><button type="button" class="btn btn-success btn-sm">Checkout</button></a>
+  </p>
+</div>
+
+
+<div class="footer" style="color:olive;">
+    <hr/>
+    <div class="copyright">
+      <div class="container">
+        <span>Martin Machua &copy; 2018</span>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

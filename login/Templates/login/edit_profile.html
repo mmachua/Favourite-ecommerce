@@ -1,0 +1,45 @@
+{% extends "base.html" %}  
+{% load crispy_forms_tags %}
+    { {% block head %}
+    <title>Profile</title>
+{% endblock head %}}
+ {% block body %}
+
+ <nav class="navbar navbar-expand text-white shadow navbar " style="background-color:teal;">
+        <a class="navbar-brand text-white" href="{% url 'login:view_profile'  %}">Profile</a>
+    <a class="nav-item nav-link active text-white" href="{% url 'login:edit_profile'  %}">Edit Profile</a>
+    </nav>
+
+ <br />
+
+
+<!--dividing into 3 columns-->
+<div class="row">
+    <!--first column-->
+    <div class="col-md-3"></div>
+    <!--end fisrt column-->
+    <!--second column-->
+    <div class="col-md-6">
+            <div class="alert alert-danger" role="alert"><p>Want to edit your profile?? You can edit your profile here!!!</p></div>
+                       <form method="POST">
+                           {% csrf_token %} 
+                           {{ form|crispy }}
+                           <br />
+                           <button type="submit" class="btn btn-danger outline">Submit</button>
+                       </form>
+            </div>              
+    </div>
+    <!--end second column-->
+    <!--third column-->
+    <div class="col-md-3"></div>
+    <!--end third column-->
+</div>
+<br/>
+<hr/>
+<!--Footer-->
+<footer class="container">
+    <p class="float-right"><a href="#">Back to top</a></p>
+        <p>&copy; Martin Machua &middot; <a href="#">Privacy</a> Comparisonn <a href="#">Terms</a></p>
+</footer> 
+<!--end footer-->
+{% endblock body %} 

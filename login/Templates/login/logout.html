@@ -1,0 +1,24 @@
+{% extends "base.html" %} 
+
+{{%  block head %}
+<title>You have logged out</title>
+{% endblock head  %}}
+{% block body %}
+
+<nav class="navbar navbar-expand text-white shadow navbar " style="background-color:teal;">
+    <h5> thank you for your time. </h5></nav>
+</div>
+<div class="container">
+    <div class="col-sm-6 col-sm-offset-3">
+<br/>
+<p class="alert alert-danger" role="alert">
+    you have logged out successfully !!!!
+</p>
+   
+   <a href="{% url 'login:login' %}"  type="button" class="btn btn-outline-success" role="button">login again</a>   
+    
+</form>
+</div>
+</div>
+{% endblock body %}
+ 
