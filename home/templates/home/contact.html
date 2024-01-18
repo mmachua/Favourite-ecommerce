@@ -1,0 +1,38 @@
+{% extends "base.html" %}  
+{% load crispy_forms_tags %}
+{ {% block head %}
+<title>{{ title }}</title>
+{% endblock head %}}
+{% block body %}
+<nav class="navbar navbar-expand text-white shadow navbar " style="background-color:teal;">
+    <h5>Contact Us</h5>
+</nav>
+<br/>
+<div class="container">
+    
+<div class="col-xs-12 col-md-8">
+
+<div class="col-sm-6-sm-offset-3">
+
+{% if confirm_message %}
+<p>{{ confirm_message }}</p>
+{% endif %}
+
+    {% if form %}
+<form role="form" action="" method="post">
+        {% csrf_token %}
+     <b>   {{ form|crispy }}</b>
+        <button type="submit" class="btn btn-info">Submit</button>
+    </form>
+    {% endif %}
+</div>
+</div>
+<div class="col-xs-12 col-md-4"></div>
+</div>
+<hr/>
+<footer class="container">
+        <p class="float-right"><a href="#">Back to top</a></p>
+        <p>&copy; Martin Machua &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer>
+
+{% endblock body %}

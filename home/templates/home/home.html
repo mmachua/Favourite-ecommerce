@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{{%  block head %}
+<title>Home</title>
+{% endblock head  %}}
+
+{% block body %}
+<nav class="navbar navbar-expand text-white shadow navbar " style="background-color:teal;">Home</nav>
+
+<div class="row">
+    <div class="col-3 col-md col-md-2">
+         <div class="container">
+            
+         </div>           
+    </div>
+
+    <!--section 2-->
+<div class="col-12 col-sm-6 col-md-8" >
+ 
+        <div class="card text-center shadow-sm border-0" >
+                <div class="card-header" style="color:red;">
+                 <b> Latest Products  </b> 
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title" style="color:rgb(47, 145, 88);">We have a 10% discount this holiday!</h5>
+                  <p class="card-text" style="color:rgb(114, 95, 46);">Browse products from the leading retailors in town </p>
+                  <a href="{% url  'shop:product_list' %}" class="btn btn-outline-primary">view products</a>
+                </div>
+                <div class="card-footer text-muted">
+                  2 days ago
+                </div>
+              </div>
+
+     </div>
+      
+    <div class="col-3 col-md col-md-2">
+        <div class="container" style="color:olive;">         
+      
+          </div>
+        </div>
+</div>
+
+
+
+
+<div class='container'>
+    {% for post in posts %}
+    <div class="card mb-3 border-0  " >      
+        <div class="card-body border-info rounded-left " >
+            <div class="card-group"  >
+                
+                <div class="card border-0 shadow-lg rounded-left " >
+
+
+
+                        <div class="row">
+                                <div class="col-12 col-md-8">
+                                    
+                                </div>
+                                <div class="col-6 col-md-4"></div>
+                              </div>
+
+                    <h6 class="card-title"><span class="badge badge-info"><h6>{{ post }}</h6></span></h6>
+                    <div class="" >
+
+
+                            
+
+                      <div class="container">
+                            <p style="color:olive;">{{ post.text }}</p>
+                          </div>
+                        </div>               
+                </div>
+                <div class="card border-0 shadow-sm">
+                 <a href="{% url "shop:product_list" %}">
+                  <img class="card-img-top" src="{{ post.image3.url  }}" alt="Card image cap" class="img-responsive" style="width: 22.25rem; height:22.5rem;" >
+                  </a>
+                </div>
+                <div class="card mb-3 border-0  ">
+                    <span class="separator">
+                        <div class="rounded"  >
+                            <div class="card  border-white mb-3 shadow-sm " style="width: 11rem; height:9.4rem;">
+                                <a href="{% url "shop:product_list" %}">
+                                    <img src="{{ post.image2.url  }}" style="width: 22.1rem; height:13.5rem;">
+                                </a>                         
+                            <br/>
+                            </div>
+                            </div>
+                        </span>
+                        <div class="card mb-3 border-0 ">
+                            <span class="separator">
+                                <div class="rounded"  >
+                                    
+                                    <div class="card  border-white mb-3 shadow-sm " style="width: 11rem; height:8.4rem;" >
+                                        <a href="{% url "shop:product_list" %}">
+                                            <img src="{{ post.image4.url  }}" style="width: 22.1rem; height:11.5rem;">
+                                        </a>
+
+                                    <br/>
+                                    </div>
+                                    </div>
+                                </span>
+                                </div>
+                                
+                </div>
+                
+              </div>
+              
+        </div>
+        <img class="card-img-bottom " src="{{ post.image.url  }}" alt="Card image cap" style="widows: 80.2rem; height:4rem;">
+       
+      </div>
+     {% endfor %}
+  
+    
+  <br>
+  <div class="#" role="alert">
+    <a href="{{ post.get_absolute_re_path }}">
+        
+  </a>
+     <h4>{{ text }}</h4>
+     
+</div>
+</div>
+    
+
+<hr/>
+
+    <!-- FOOTER -->
+    
+  </main>
+    
+
+      <footer class="container">
+          <p class="float-right"><a href="#">Back to top</a></p>
+          <p>&copy; Martin Machua &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        </footer>
+
+
+
+
+{% endblock body %} 

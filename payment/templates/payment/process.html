@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>pay using Paypal</title>
+     
+{% endblock head %}
+
+{% block body %}
+<nav class="navbar navbar-expand text-white shadow navbar " style="background-color:teal;">Payment</nav>
+<div class="container">
+<h2>Pay using Paypal</h2>
+{{ form.render }}
+<br/>
+
+<div id="paypal-button-container"></div>
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+// Render the PayPal button
+paypal.Button.render({
+// Set your environment
+env: 'sandbox', // sandbox | production
+
+// Specify the style of the button
+style: {
+  layout: 'vertical',  // horizontal | vertical
+  size:   'medium',    // medium | large | responsive
+  shape:  'rect',      // pill | rect
+  color:  'gold'       // gold | blue | silver | white | black
+},
+
+// Specify allowed and disallowed funding sources
+//
+// Options:
+// - paypal.FUNDING.CARD
+// - paypal.FUNDING.CREDIT
+// - paypal.FUNDING.ELV
+funding: {
+  allowed: [
+    paypal.FUNDING.CARD,
+    paypal.FUNDING.CREDIT
+  ],
+  disallowed: []
+},
+
+// PayPal Client IDs - replace with your own
+// Create a PayPal app: https://developer.paypal.com/developer/applications/create
+client: {
+  sandbox: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+  production: '<insert production client id>'
+},
+
+payment: function (data, actions) {
+  return actions.payment.create({
+    payment: {
+      transactions: [
+        {
+          amount: {
+            total: '0.01',
+            currency: 'USD'
+          }
+        }
+      ]
+    }
+  });
+},
+
+onAuthorize: function (data, actions) {
+  return actions.payment.execute()
+    .then(function () {
+      window.alert('Payment Complete!');
+    });
+}
+}, '#paypal-button-container');
+</script>
+<br/>
+<h5 class=" text-right" style="color:olive;">Remembered Something?? <a href=" {% url  'shop:product_list' %}" ><button type="button" class="btn btn-info  btn-sm">Continue shopping</button></a></h5>
+</div>
+<br/>
+<hr/>
+<footer class="container sticky-bottom">
+      <p class="float-right"><a href="#">Back to top</a></p>
+      <p>&copy; Martin Machua &middot; <a href="#">Privacy</a> Comparisonn <a href="#">Terms</a></p>
+    </footer>  
+{% endblock body %}

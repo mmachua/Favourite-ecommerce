@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous">
+      <!-- Favicons -->
+<link rel="apple-touch-icon" href="/docs/4.1/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+<link rel="icon" href="/docs/4.1/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/docs/4.1/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="manifest" href="/docs/4.1/assets/img/favicons/manifest.json">
+<link rel="mask-icon" href="/docs/4.1/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
+<link rel="icon" href="/favicon.ico">
+<meta name="msapplication-config" content="/docs/4.1/assets/img/favicons/browserconfig.xml">
+
+   <!-- {% load static  %}
+    <link rel="stylesheet" href="{% static 'login/style.css'%}" type="text/css">-->
+      {% block head %}
+      <title>base</title>
+    
+    {% endblock %}
+</head>
+<body>
+    
+
+
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+        <a class="navbar-brand"style="color:olive" href="{% url 'home:home' %}"> <h2> Favourite</h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            
+            
+            {% url 'about' as about %}
+            <li   class="nav-item active" >
+              <a class="nav-link" href="{% url  'home:home' %}">Home </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url  'shop:product_list' %}">Products</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url  'home:contact' %}">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'home:about' %}">About</a>
+            </li>
+          </ul>
+          
+          <a href="{% url 'cart:cart_detail' %}" class="nav-item navbar-nav navbar-right">
+            
+               <span class="badge badge-light">{% with total_items=cart|length %}
+                   {% if cart|length > 0 %}
+                     Your cart: 
+                     
+                     <span class="badge badge-info badge-pill"><h6>{{ total_items }}</h6></span> item{{ total_items|pluralize }} ,
+                       ${{ cart.get_total_price }}
+                    
+                   {% else %}
+                     Your cart is empty.
+                   {% endif %}
+                 {% endwith %}</span>
+             
+           </a>  
+           <li class="nav item">
+           <div class="dropdown">
+              <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ user.get_username }}
+              </a>
+            
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                
+                  {% if user.is_authenticated %} 
+                  <a class="dropdown-item" href="{ % url 'login:view_profile'  %}">
+                            View Profile                 
+                  </a>
+                  <a class="dropdown-item" href="{ % url 'login:logout' %}">Logout</a>
+                  {% else  %}
+                <a class="dropdown-item" href="{ % url 'login:login'  %}">Sign In</a>
+                <a class="dropdown-item" href="{ % url 'login:register'  %}"> Sign up</a>
+                {% endif %}
+              </div>
+            </div>
+          </li>
+
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" href="{% url 'shop:product_list' %}" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+        
+    {% block body%}
+    <h1>Base</h1>
+    {% endblock %}
+    <!-- Optional JavaScript -->
+    <script>
+      var maps = [];
+      var markers = [];
+      function initMap() {
+          var $maps = $('.map');
+          $.each($maps, function (i, value) {
+              var uluru = { lat: parseFloat($(value).attr('lat')), lng: parseFloat($(value).attr('lng')) };
+  
+              var mapDivId = $(value).attr('id');
+  
+              maps[mapDivId] = new google.maps.Map(document.getElementById(mapDivId), {
+                  zoom: 17,
+                  center: uluru
+              });
+  
+              markers[mapDivId] = new google.maps.Marker({
+                  position: uluru,
+                  map: maps[mapDivId]
+              });
+          })
+      }
+  </script>
+  
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?language=ru-Ru&key=YOUR_KEY&callback=initMap">
+  </script>  
+ <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> 
+</body>
+
+</html>

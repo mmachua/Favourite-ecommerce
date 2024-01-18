@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<!--<nav class="navbar sticky-top navbar-light text-white shadow-lg position-sticky" style="background-color:#149ab1;"> </nav>-->
+<div class="container"><br/>
+
+<div class="alert alert-warning" role="alert">
+        <h2>Your payment has not been processed</h2>
+</div>
+<p>There was a problem processing your payment</p>
+<p class=" text">
+        <a href=" {% url  'shop:product_list' %}" ><button type="button" class="btn btn-danger  btn-sm">Continue shopping</button></a>
+        <a href="{% url 'payment:process' %}" ><button type="button" class="btn btn-success btn-sm">try again</button></a>
+      </p>
+</div>
+{% endblock body %}
